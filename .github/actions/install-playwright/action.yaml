@@ -28,7 +28,7 @@ runs:
           // const workingDirectory = core.getInput("working-directory");
           const workingDirectory = "${{ inputs.working-directory }}";
           console.debug("Specified working directory:", workingDirectory);
-          if (workingDirectory) process.chdir();
+          if (workingDirectory) process.chdir(workingDirectory);
           console.debug("Actual working directory:", process.cwd());
           let version = "";
           try {

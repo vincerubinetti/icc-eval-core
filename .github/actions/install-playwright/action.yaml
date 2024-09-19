@@ -24,9 +24,10 @@ runs:
       id: version
       with:
         script: |
-          const workingDirectory = core.getInput("working-directory", { required: true });
+          const workingDirectory = core.getInput("working-directory", { required: false });
+          console.debug("Specified working directory:", workingDirectory);
           if (workingDirectory) process.chdir();
-          console.debug("Working directory:", process.cwd());
+          console.debug("Actual working directory:", process.cwd());
           let version = "";
           try {
             version = require("@playwright/test/package.json").version;

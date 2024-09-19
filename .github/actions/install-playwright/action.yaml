@@ -24,15 +24,12 @@ runs:
       id: version
       with:
         script: |
-          import { createRequire } from "module";
-          const require = createRequire(import.meta.url);
-          const packageName = "@playwright/test";
-          let version = "";
           const workingDirectory = core.getInput("working-directory");
           if (workingDirectory) process.chdir();
           console.debug("Working directory:", process.cwd());
+          let version = "";
           try {
-            version = require(`${packageName}/package.json`).version;
+            version = require("@playwright/test/package.json").version;
           } catch (error) {
             console.log(error);
           }

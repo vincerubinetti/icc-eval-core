@@ -24,7 +24,9 @@ runs:
       id: version
       with:
         script: |
-          const workingDirectory = core.getInput("working-directory", { required: false });
+          // https://github.com/actions/toolkit/issues/1624
+          // const workingDirectory = core.getInput("working-directory");
+          const workingDirectory = "${{ inputs.working-directory }}";
           console.debug("Specified working directory:", workingDirectory);
           if (workingDirectory) process.chdir();
           console.debug("Actual working directory:", process.cwd());

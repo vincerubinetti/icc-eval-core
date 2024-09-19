@@ -22,24 +22,25 @@ runs:
     - name: Get Playwright version
       uses: actions/github-script@v7
       id: version
-      script: |
-        import { createRequire } from "module";
-        const require = createRequire(import.meta.url);
-        const packageName = "@playwright/test";
-        let version = "";
-        const workingDirectory = core.getInput("working-directory");
-        if (workingDirectory) process.chdir();
-        console.debug("Working directory:", process.cwd());
-        try {
-          version = require(`${packageName}/package.json`).version;
-        } catch (error) {
-          console.log(error);
-        }
-        console.debug("Version:", version);
-        if (version) {
-          core.exportVariable("PLAYWRIGHT_VERSION", version);
-          core.setOutput("version", version);
-        } else core.setFailed("Couldn't get Playwright version");
+      with:
+        script: |
+          import { createRequire } from "module";
+          const require = createRequire(import.meta.url);
+          const packageName = "@playwright/test";
+          let version = "";
+          const workingDirectory = core.getInput("working-directory");
+          if (workingDirectory) process.chdir();
+          console.debug("Working directory:", process.cwd());
+          try {
+            version = require(`${packageName}/package.json`).version;
+          } catch (error) {
+            console.log(error);
+          }
+          console.debug("Version:", version);
+          if (version) {
+            core.exportVariable("PLAYWRIGHT_VERSION", version);
+            core.setOutput("version", version);
+          } else core.setFailed("Couldn't get Playwright version");
 
     - name: Cache Playwright
       id: cache

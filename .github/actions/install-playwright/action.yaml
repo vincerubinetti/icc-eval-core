@@ -24,14 +24,14 @@ runs:
       id: version
       with:
         script: |
-          const workingDirectory = core.getInput("working-directory");
+          const workingDirectory = core.getInput("working-directory", { required: true });
           if (workingDirectory) process.chdir();
           console.debug("Working directory:", process.cwd());
           let version = "";
           try {
             version = require("@playwright/test/package.json").version;
           } catch (error) {
-            console.log(error);
+            console.log(error.message);
           }
           console.debug("Version:", version);
           if (version) {
